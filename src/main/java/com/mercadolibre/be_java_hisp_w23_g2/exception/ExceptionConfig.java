@@ -2,15 +2,14 @@ package com.mercadolibre.be_java_hisp_w23_g2.exception;
 
 import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.ErrorDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.MessageDTO;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Global exception handler for handling specific exceptions and providing standardized responses.
@@ -63,15 +62,15 @@ public class ExceptionConfig {
    */
   @ExceptionHandler
   public ResponseEntity<ErrorDTO> validationException(MethodArgumentNotValidException e) {
-        List<String> messages = new ArrayList<>();
-        e.getBindingResult().getFieldErrors().forEach(fieldError ->
-                messages.add(fieldError.getDefaultMessage()));
+    List<String> messages = new ArrayList<>();
+    e.getBindingResult().getFieldErrors().forEach(fieldError ->
+        messages.add(fieldError.getDefaultMessage()));
 
-        ErrorDTO errorDto = new ErrorDTO();
-        errorDto.setExplanation("Se encontraron errores de validación");
-        errorDto.setMessage(messages);
+    ErrorDTO errorDto = new ErrorDTO();
+    errorDto.setExplanation("Se encontraron errores de validación");
+    errorDto.setMessage(messages);
 
-        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
   }
 
   /**

@@ -26,7 +26,7 @@ public class PostBasicDTO {
   @JsonSerialize(using = LocalDateSerializer.class)
   @JsonFormat(pattern = "dd-MM-yyyy")
   private LocalDate date;
-    private ProductBasicDTO product;
+  private ProductBasicDTO product;
   private String category;
   private double price;
 }
