@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.PostBasicDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.UserBasicDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.MessageDTO;
@@ -23,9 +22,9 @@ import com.mercadolibre.be_java_hisp_w23_g2.utils.Mapper;
 import com.mercadolibre.be_java_hisp_w23_g2.utils.ObjectCreator;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -368,14 +367,12 @@ class UserServiceTest {
     Post post32 = new Post(2, 3, LocalDate.now().minusDays(13), new Product(), null, 0.0);
     Post post33 = new Post(3, 3, LocalDate.now().minusDays(10), new Product(), null, 0.0);
 
-    follower1.setPosts(new ArrayList<>(Arrays.asList(post21, post22, post23, post24)));
-    follower2.setPosts(new ArrayList<>(Arrays.asList(post31, post32, post33)));
+    follower1.setPosts(List.of(post21, post22, post23, post24));
+    follower2.setPosts(List.of(post31, post32, post33));
 
-    ObjectMapper mapper = new ObjectMapper();
-    List<PostBasicDTO> postDTOS = new ArrayList<>(
-        Stream.of(post21, post22, post23, post24, post31, post32, post33)
-            .map(post -> mapper.convertValue(post, PostBasicDTO.class)).toList());
-    postDTOS.sort(Comparator.comparing(PostBasicDTO::getDate));
+    List<PostBasicDTO> postDTOS = Stream.of(post21, post22, post23, post24, post31, post32, post33)
+        .map(Mapper::mapPostToPostBasicDTO).sorted(Comparator.comparing(PostBasicDTO::getDate))
+        .collect(Collectors.toList());
 
     PostsFollowedDTO followedDTO = new PostsFollowedDTO(user.getId(), postDTOS);
 
@@ -411,10 +408,9 @@ class UserServiceTest {
     follower1.setPosts(List.of(post21, post22, post23, post24));
     follower2.setPosts(List.of(post31, post32, post33));
 
-    ObjectMapper mapper = new ObjectMapper();
     List<PostBasicDTO> postDTOS = new ArrayList<>(
         Stream.of(post21, post22, post23, post24, post31, post32, post33)
-            .map(post -> mapper.convertValue(post, PostBasicDTO.class)).toList());
+            .map(Mapper::mapPostToPostBasicDTO).toList());
     postDTOS.sort(Comparator.comparing(PostBasicDTO::getDate).reversed());
 
     PostsFollowedDTO followedDTO = new PostsFollowedDTO(user.getId(), postDTOS);
