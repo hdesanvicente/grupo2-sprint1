@@ -119,7 +119,7 @@ public class UserService implements IUserService {
 
     validateFollowing(currentUser, userIdToUnfollow);
 
-    userRepository.unfollowUser(currentUser, userToUnfollow);
+    userToUnfollow = userRepository.unfollowUser(currentUser, userToUnfollow);
 
     return new MessageDTO("Has stopped following " + userToUnfollow.getUserName());
   }

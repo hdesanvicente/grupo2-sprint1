@@ -7,7 +7,11 @@ import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.UserFollowersCountDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.UserFollowersDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.service.IUserService;
 import java.util.List;
+
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/users")
+@Validated
 public class UserController {
 
   private final IUserService userService;
@@ -36,7 +41,7 @@ public class UserController {
    */
   @GetMapping("/{userId}/followers/count")
   public ResponseEntity<UserFollowersCountDTO> getFollowersCountSeller(
-      @PathVariable Integer userId) {
+      @PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userId) {
     return ResponseEntity.ok(userService.getFollowersCountSeller(userId));
   }
 
@@ -48,7 +53,7 @@ public class UserController {
    * @return ResponseEntity with the result of the getFollowersUser operation.
    */
   @GetMapping("/{userId}/followers/list")
-  public ResponseEntity<UserFollowersDTO> getFollowersUser(@PathVariable Integer userId,
+  public ResponseEntity<UserFollowersDTO> getFollowersUser(@PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userId,
       @RequestParam(required = false) String order) {
     return ResponseEntity.ok(userService.getFollowersUser(userId, order));
   }
@@ -61,8 +66,8 @@ public class UserController {
    * @return ResponseEntity with the result of the unfollowUser operation.
    */
   @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
-  public ResponseEntity<MessageDTO> unfollowUser(@PathVariable Integer userId,
-      @PathVariable Integer userIdToUnfollow) {
+  public ResponseEntity<MessageDTO> unfollowUser(@PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userId,
+      @PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userIdToUnfollow) {
     return ResponseEntity.ok(userService.unfollowUser(userId, userIdToUnfollow));
   }
 
@@ -74,7 +79,7 @@ public class UserController {
    * @return ResponseEntity with the result of the getFollowedUser operation.
    */
   @GetMapping("/{userId}/followed/list")
-  public ResponseEntity<UserFollowedDTO> getFollowedUser(@PathVariable Integer userId,
+  public ResponseEntity<UserFollowedDTO> getFollowedUser(@PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userId,
       @RequestParam(required = false) String order) {
     return ResponseEntity.ok(userService.getFollowedUser(userId, order));
   }
@@ -97,8 +102,8 @@ public class UserController {
    * @return ResponseEntity with the result of the followUser operation.
    */
   @PostMapping("/{userId}/follow/{userIdToFollow}")
-  public ResponseEntity<UserFollowedDTO> followUser(@PathVariable Integer userId,
-      @PathVariable Integer userIdToFollow) {
+  public ResponseEntity<UserFollowedDTO> followUser(@PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userId,
+      @PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userIdToFollow) {
     return ResponseEntity.ok(userService.followUser(userId, userIdToFollow));
   }
 }

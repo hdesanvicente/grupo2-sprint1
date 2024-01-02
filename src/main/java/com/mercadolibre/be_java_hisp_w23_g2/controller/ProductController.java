@@ -7,6 +7,7 @@ import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.PostsFollowedDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.service.IProductService;
 import com.mercadolibre.be_java_hisp_w23_g2.service.IUserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,7 +51,7 @@ public class ProductController {
    * @return ResponseEntity with the result of the getPostsByFollowedUsers operation.
    */
   @GetMapping("/followed/{userId}/list")
-  public ResponseEntity<PostsFollowedDTO> getPostsByFollowedUsers(@PathVariable Integer userId,
+  public ResponseEntity<PostsFollowedDTO> getPostsByFollowedUsers(@PathVariable @Positive(message = "El id debe ser mayor a cero") Integer userId,
       @RequestParam(required = false) String order) {
     return ResponseEntity.ok(userService.getPostsByFollowedUsers(userId, order));
   }
