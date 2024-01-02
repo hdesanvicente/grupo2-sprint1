@@ -10,10 +10,10 @@ public interface IUserRepository {
 
   List<User> getAll();
 
-  void addPost(User user, Post post);
+  Post addPost(User user, Post post);
 
   User followUser(int userId, int userIdToFollow);
 
-  void unfollowUser(User userId, User userIdToUnfollow);
+  User unfollowUser(User userId, User userIdToUnfollow);
 
 }

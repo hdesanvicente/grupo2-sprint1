@@ -62,9 +62,10 @@ public class UserRepository implements IUserRepository {
    * @param post The post to be added.
    */
   @Override
-  public void addPost(User user, Post post) {
+  public Post addPost(User user, Post post) {
     post.setId(++lastPostId);
     user.getPosts().add(post);
+    return post;
   }
 
   /**
@@ -91,10 +92,10 @@ public class UserRepository implements IUserRepository {
    * @param userToUnfollow The user to be unfollowed.
    */
   @Override
-  public void unfollowUser(User currentUser, User userToUnfollow) {
+  public User unfollowUser(User currentUser, User userToUnfollow) {
     currentUser.getFollowed().remove(userToUnfollow);
     userToUnfollow.getFollowers().remove(currentUser);
-
+    return userToUnfollow;
   }
 
   /**
