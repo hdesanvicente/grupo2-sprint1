@@ -392,14 +392,14 @@ class UserServiceTest {
     User follower2 = ObjectCreator.createUser(3);
     user.setFollowed(List.of(follower1, follower2));
 
-    Post post21 = new Post(1, 2, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post post22 = new Post(2, 2, LocalDate.now().minusDays(5), new Product(), null, 0.0);
-    Post post23 = new Post(3, 2, LocalDate.now().minusDays(11), new Product(), null, 0.0);
-    Post post24 = new Post(4, 2, LocalDate.now().minusDays(12), new Product(), null, 0.0);
+    Post post21 = ObjectCreator.createPost(LocalDate.now().minusWeeks(1));
+    Post post22 = ObjectCreator.createPost(LocalDate.now().minusDays(5));
+    Post post23 = ObjectCreator.createPost(LocalDate.now().minusDays(11));
+    Post post24 = ObjectCreator.createPost(LocalDate.now().minusDays(12));
 
-    Post post31 = new Post(1, 3, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post post32 = new Post(2, 3, LocalDate.now().minusDays(13), new Product(), null, 0.0);
-    Post post33 = new Post(3, 3, LocalDate.now().minusDays(10), new Product(), null, 0.0);
+    Post post31 = ObjectCreator.createPost(LocalDate.now().minusWeeks(1));
+    Post post32 = ObjectCreator.createPost(LocalDate.now().minusDays(13));
+    Post post33 = ObjectCreator.createPost(LocalDate.now().minusDays(10));
 
     follower1.setPosts(List.of(post21, post22, post23, post24));
     follower2.setPosts(List.of(post31, post32, post33));
@@ -450,14 +450,14 @@ class UserServiceTest {
     User follower2 = ObjectCreator.createUser(3);
     user.setFollowed(List.of(follower1, follower2));
 
-    Post postRecent1 = new Post(1, 2, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post postRecent2 = new Post(2, 2, LocalDate.now().minusDays(5), new Product(), null, 0.0);
-    Post postRecent3 = new Post(3, 2, LocalDate.now().minusDays(14), new Product(), null, 0.0);
-    Post postOld1 = new Post(4, 2, LocalDate.now().minusDays(15), new Product(), null, 0.0);
+    Post postRecent1 = ObjectCreator.createPostRecent();
+    Post postRecent2 = ObjectCreator.createPostRecent();
+    Post postRecent3 = ObjectCreator.createPostRecent();
+    Post postOld1 = ObjectCreator.createPostOld();
 
-    Post postRecent4 = new Post(1, 3, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post postOld2 = new Post(2, 3, LocalDate.now().minusDays(15), new Product(), null, 0.0);
-    Post postRecent5 = new Post(3, 3, LocalDate.now().minusDays(14), new Product(), null, 0.0);
+    Post postRecent4 = ObjectCreator.createPostRecent();
+    Post postOld2 = ObjectCreator.createPostOld();
+    Post postRecent5 = ObjectCreator.createPostRecent();
 
     follower1.setPosts(List.of(postRecent1, postRecent2, postRecent3, postOld1));
     follower2.setPosts(List.of(postRecent4, postOld2, postRecent5));
