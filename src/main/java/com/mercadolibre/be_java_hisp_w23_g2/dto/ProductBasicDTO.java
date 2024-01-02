@@ -2,17 +2,21 @@ package com.mercadolibre.be_java_hisp_w23_g2.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonPropertyOrder({"product_id", "product_name", "type", "brand", "color", "notes"})
 public class ProductBasicDTO {
+
   @NotNull(message = "El id no puede estar vacío")
   @Positive(message = "El id debe ser mayor a cero")
   @JsonProperty("product_id")

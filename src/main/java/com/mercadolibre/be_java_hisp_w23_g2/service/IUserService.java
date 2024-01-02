@@ -12,7 +12,7 @@ public interface IUserService {
 
   UserFollowersCountDTO getFollowersCountSeller(Integer userId);
 
-    List<UserBasicDTO> getAll();
+  List<UserBasicDTO> getAll();
 
   UserFollowedDTO followUser(Integer userId, Integer userIdToFollow);
 
@@ -22,5 +22,5 @@ public interface IUserService {
 
   UserFollowedDTO getFollowedUser(Integer userId, String sortType);
 
-    PostsFollowedDTO getPostsByFollowedUsers(Integer userId, String sortType);
+  PostsFollowedDTO getPostsByFollowedUsers(Integer userId, String sortType);
 }

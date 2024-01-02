@@ -1,17 +1,13 @@
 package com.mercadolibre.be_java_hisp_w23_g2.controller;
 
 
-import com.mercadolibre.be_java_hisp_w23_g2.service.IUserService;
-import jakarta.validation.Valid;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.requests.PostDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.MessageDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.responses.PostsFollowedDTO;
 import com.mercadolibre.be_java_hisp_w23_g2.service.IProductService;
 import com.mercadolibre.be_java_hisp_w23_g2.service.IUserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
