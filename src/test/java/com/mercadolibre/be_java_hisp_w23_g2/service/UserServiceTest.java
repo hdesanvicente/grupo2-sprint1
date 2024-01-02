@@ -284,7 +284,7 @@ class UserServiceTest {
   @Test
   @DisplayName("T-0005: Test method to verify that the type of ascending sort by date exists.")
   void verifyTypeAscSortingExistsTest() {
-    // Arrange
+    // ARRANGE
     User user = ObjectCreator.createUser(1);
     User follower = ObjectCreator.createUser(2);
     user.setFollowed(List.of(follower));
@@ -297,17 +297,17 @@ class UserServiceTest {
     when(repository.findUserById(1)).thenReturn(user);
     when(repository.findUserById(2)).thenReturn(follower);
 
-    // Act
+    // ACT
     PostsFollowedDTO result = service.getPostsByFollowedUsers(user.getId(), "date_asc");
 
-    // Assert
+    // ASSERT
     assertNotNull(result);
   }
 
   @Test
   @DisplayName("T-0005: Test method to verify that the type of descending sort by date exists.")
   void verifyTypeDescSortingExistsTest() {
-    // Arrange
+    // ARRANGE
     User user = ObjectCreator.createUser(1);
     User follower = ObjectCreator.createUser(2);
     user.setFollowers(List.of(follower));
@@ -321,17 +321,17 @@ class UserServiceTest {
     when(repository.findUserById(1)).thenReturn(user);
     when(repository.findUserById(2)).thenReturn(follower);
 
-    // Act
+    // ACT
     PostsFollowedDTO result = service.getPostsByFollowedUsers(user.getId(), "date_desc");
 
-    // Assert
+    // ASSERT
     assertNotNull(result);
   }
 
   @Test
   @DisplayName("T-0005: Test method to verify that the type of sort by date. Exception.")
   void verifyTypeSortingExistsExceptionTest() {
-    // Arrange
+    // ARRANGE
     User user = ObjectCreator.createUser(1);
     User follower = ObjectCreator.createUser(2);
     user.setFollowers(List.of(follower));
@@ -345,14 +345,14 @@ class UserServiceTest {
     when(repository.findUserById(1)).thenReturn(user);
     when(repository.findUserById(2)).thenReturn(follower);
 
-    // Act & Assert
+    // ACT & ASSERT
     assertThrows(BadRequestException.class, () -> service.getPostsByFollowedUsers(1, "fake"));
   }
 
   @Test
   @DisplayName("T-0006: Test method to verify correct ascending order by date.")
   void verifyAscSortingByDateTest() {
-    // Arrange
+    // ARRANGE
     User user = ObjectCreator.createUser(1);
     User follower1 = ObjectCreator.createUser(2);
     User follower2 = ObjectCreator.createUser(3);
@@ -380,17 +380,17 @@ class UserServiceTest {
     when(repository.findUserById(2)).thenReturn(follower1);
     when(repository.findUserById(3)).thenReturn(follower2);
 
-    // Act
+    // ACT
     PostsFollowedDTO result = service.getPostsByFollowedUsers(user.getId(), "date_asc");
 
-    // Assert
+    // ASSERT
     assertEquals(followedDTO, result);
   }
 
   @Test
   @DisplayName("T-0006: Test method to verify correct descending order by date.")
   void verifyDescSortingByDateTest() {
-    // Arrange
+    // ARRANGE
     User user = ObjectCreator.createUser(1);
     User follower1 = ObjectCreator.createUser(2);
     User follower2 = ObjectCreator.createUser(3);
@@ -419,17 +419,17 @@ class UserServiceTest {
     when(repository.findUserById(2)).thenReturn(follower1);
     when(repository.findUserById(3)).thenReturn(follower2);
 
-    // Act
+    // ACT
     PostsFollowedDTO result = service.getPostsByFollowedUsers(user.getId(), "date_desc");
 
-    // Assert
+    // ASSERT
     assertEquals(followedDTO, result);
   }
 
   @DisplayName("T-0007: Followers count seller OK.")
   @Test
   void getFollowersCountSellerTest() {
-    //Arrange
+    //ARRANGE
     User user = ObjectCreator.createUser(1);
     User follower1 = ObjectCreator.createUser(2);
     User follower2 = ObjectCreator.createUser(3);
@@ -437,17 +437,17 @@ class UserServiceTest {
 
     when(repository.findUserById(user.getId())).thenReturn(user);
 
-    // Act
+    // ACT
     UserFollowersCountDTO expectedResult = service.getFollowersCountSeller(user.getId());
 
-    // Assert
+    // ASSERT
     Assertions.assertEquals(user.getFollowers().size(), expectedResult.getFollowersCount());
   }
 
   @Test
   @DisplayName("T-0008: Test method to obtain posts with the last two weeks old.")
   void getPostsWithLastTwoWeeksOld() {
-    //Arrange
+    //ARRANGE
     User user = ObjectCreator.createUser(1);
     User follower1 = ObjectCreator.createUser(2);
     User follower2 = ObjectCreator.createUser(3);
@@ -471,9 +471,12 @@ class UserServiceTest {
     when(repository.findUserById(1)).thenReturn(user);
     when(repository.findUserById(2)).thenReturn(follower1);
     when(repository.findUserById(3)).thenReturn(follower2);
-    //Act
+
+    //ACT
     PostsFollowedDTO result = service.getPostsByFollowedUsers(user.getId(), null);
-    //Assert
+
+    //ASSERT
     Assertions.assertEquals(followedDTO, result);
   }
+
 }
