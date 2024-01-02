@@ -1,10 +1,8 @@
 package com.mercadolibre.be_java_hisp_w23_g2.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,14 +20,13 @@ import com.mercadolibre.be_java_hisp_w23_g2.exception.BadRequestException;
 import com.mercadolibre.be_java_hisp_w23_g2.exception.NotFoundException;
 import com.mercadolibre.be_java_hisp_w23_g2.repository.UserRepository;
 import com.mercadolibre.be_java_hisp_w23_g2.utils.Mapper;
+import com.mercadolibre.be_java_hisp_w23_g2.utils.ObjectCreator;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
-
-import com.mercadolibre.be_java_hisp_w23_g2.utils.ObjectCreator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,14 +49,15 @@ class UserServiceTest {
   void followUserTest() {
     // ARRANGE
     User userFollower = ObjectCreator.createUser(2, "Alice Smith");
-    User userToFollow = ObjectCreator.createUser(1,"John Doe");
+    User userToFollow = ObjectCreator.createUser(1, "John Doe");
     userToFollow.setFollowed(List.of(userFollower));
 
     when(repository.findUserById(1)).thenReturn(userToFollow);
     when(repository.findUserById(2)).thenReturn(userFollower);
     when(repository.followUser(2, 1)).thenReturn(userToFollow);
 
-    UserFollowedDTO expected = new UserFollowedDTO(1, "John Doe", List.of(new UserBasicDTO(2, "Alice Smith")));
+    UserFollowedDTO expected = new UserFollowedDTO(1, "John Doe",
+        List.of(new UserBasicDTO(2, "Alice Smith")));
 
     // ACT
     UserFollowedDTO result = service.followUser(2, 1);
@@ -91,7 +89,7 @@ class UserServiceTest {
 
     when(repository.findUserById(1)).thenReturn(userFollower);
     when(repository.findUserById(2)).thenReturn(userToUnfollow);
-    when(repository.unfollowUser(userFollower,userToUnfollow)).thenReturn(userToUnfollow);
+    when(repository.unfollowUser(userFollower, userToUnfollow)).thenReturn(userToUnfollow);
 
     String expected = "Has stopped following Alice Smith";
 
@@ -142,7 +140,8 @@ class UserServiceTest {
     when(repository.findUserById(1)).thenReturn(user);
 
     //ACT && ASSERT
-    assertThrows(BadRequestException.class, () -> service.getFollowedUser(userId, "cualquier_cosa"));
+    assertThrows(BadRequestException.class,
+        () -> service.getFollowedUser(userId, "cualquier_cosa"));
   }
 
   @Test
@@ -173,7 +172,8 @@ class UserServiceTest {
     when(repository.findUserById(1)).thenReturn(user);
 
     //ACT && ASSERT
-    assertThrows(BadRequestException.class, () -> service.getFollowersUser(userId, "cualquier_cosa"));
+    assertThrows(BadRequestException.class,
+        () -> service.getFollowersUser(userId, "cualquier_cosa"));
   }
 
   @Test
@@ -181,7 +181,8 @@ class UserServiceTest {
   void getFollowersUserAscTest() {
     //ARRANGE
     User user = ObjectCreator.createUser(1, "John Doe");
-    user.setFollowers(List.of(ObjectCreator.createUser(3, "Bob Jones"), ObjectCreator.createUser(2, "Alice Smith")));
+    user.setFollowers(List.of(ObjectCreator.createUser(3, "Bob Jones"),
+        ObjectCreator.createUser(2, "Alice Smith")));
 
     UserFollowersDTO expected = new UserFollowersDTO(1, "John Doe",
         List.of(new UserBasicDTO(2, "Alice Smith"), new UserBasicDTO(3, "Bob Jones")));
@@ -200,9 +201,11 @@ class UserServiceTest {
   void getFollowersUserDescTest() {
     //ARRANGE
     User user = ObjectCreator.createUser(1, "John Doe");
-    user.setFollowers(List.of(ObjectCreator.createUser(2, "Alice Smith"), ObjectCreator.createUser(3, "Bob Jones")));
+    user.setFollowers(List.of(ObjectCreator.createUser(2, "Alice Smith"),
+        ObjectCreator.createUser(3, "Bob Jones")));
 
-    UserFollowersDTO expected = new UserFollowersDTO(1, "John Doe", List.of(new UserBasicDTO(3, "Bob Jones"), new UserBasicDTO(2, "Alice Smith")));
+    UserFollowersDTO expected = new UserFollowersDTO(1, "John Doe",
+        List.of(new UserBasicDTO(3, "Bob Jones"), new UserBasicDTO(2, "Alice Smith")));
 
     when(repository.findUserById(1)).thenReturn(user);
 
@@ -231,9 +234,11 @@ class UserServiceTest {
   void getFollowedUserAscTest() {
     //ARRANGE
     User user = ObjectCreator.createUser(1, "John Doe");
-    user.setFollowed(List.of(ObjectCreator.createUser(3, "Bob Jones"), ObjectCreator.createUser(2, "Alice Smith")));
+    user.setFollowed(List.of(ObjectCreator.createUser(3, "Bob Jones"),
+        ObjectCreator.createUser(2, "Alice Smith")));
 
-    UserFollowedDTO expected = new UserFollowedDTO(1, "John Doe", List.of(new UserBasicDTO(2, "Alice Smith"), new UserBasicDTO(3, "Bob Jones")));
+    UserFollowedDTO expected = new UserFollowedDTO(1, "John Doe",
+        List.of(new UserBasicDTO(2, "Alice Smith"), new UserBasicDTO(3, "Bob Jones")));
 
     when(repository.findUserById(1)).thenReturn(user);
 
@@ -249,9 +254,11 @@ class UserServiceTest {
   void getFollowedUserDescTest() {
     //ARRANGE
     User user = ObjectCreator.createUser(1, "John Doe");
-    user.setFollowed(List.of(ObjectCreator.createUser(2, "Alice Smith"), ObjectCreator.createUser(3, "Bob Jones")));
+    user.setFollowed(List.of(ObjectCreator.createUser(2, "Alice Smith"),
+        ObjectCreator.createUser(3, "Bob Jones")));
 
-    UserFollowedDTO expected = new UserFollowedDTO(1, "John Doe", List.of(new UserBasicDTO(3, "Bob Jones"), new UserBasicDTO(2, "Alice Smith")));
+    UserFollowedDTO expected = new UserFollowedDTO(1, "John Doe",
+        List.of(new UserBasicDTO(3, "Bob Jones"), new UserBasicDTO(2, "Alice Smith")));
 
     when(repository.findUserById(1)).thenReturn(user);
 
@@ -392,14 +399,14 @@ class UserServiceTest {
     User follower2 = ObjectCreator.createUser(3);
     user.setFollowed(List.of(follower1, follower2));
 
-    Post post21 = new Post(1, 2, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post post22 = new Post(2, 2, LocalDate.now().minusDays(5), new Product(), null, 0.0);
-    Post post23 = new Post(3, 2, LocalDate.now().minusDays(11), new Product(), null, 0.0);
-    Post post24 = new Post(4, 2, LocalDate.now().minusDays(12), new Product(), null, 0.0);
+    Post post21 = ObjectCreator.createPost(LocalDate.now().minusWeeks(1));
+    Post post22 = ObjectCreator.createPost(LocalDate.now().minusDays(5));
+    Post post23 = ObjectCreator.createPost(LocalDate.now().minusDays(11));
+    Post post24 = ObjectCreator.createPost(LocalDate.now().minusDays(12));
 
-    Post post31 = new Post(1, 3, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post post32 = new Post(2, 3, LocalDate.now().minusDays(13), new Product(), null, 0.0);
-    Post post33 = new Post(3, 3, LocalDate.now().minusDays(10), new Product(), null, 0.0);
+    Post post31 = ObjectCreator.createPost(LocalDate.now().minusWeeks(1));
+    Post post32 = ObjectCreator.createPost(LocalDate.now().minusDays(13));
+    Post post33 = ObjectCreator.createPost(LocalDate.now().minusDays(10));
 
     follower1.setPosts(List.of(post21, post22, post23, post24));
     follower2.setPosts(List.of(post31, post32, post33));
@@ -450,14 +457,14 @@ class UserServiceTest {
     User follower2 = ObjectCreator.createUser(3);
     user.setFollowed(List.of(follower1, follower2));
 
-    Post postRecent1 = new Post(1, 2, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post postRecent2 = new Post(2, 2, LocalDate.now().minusDays(5), new Product(), null, 0.0);
-    Post postRecent3 = new Post(3, 2, LocalDate.now().minusDays(14), new Product(), null, 0.0);
-    Post postOld1 = new Post(4, 2, LocalDate.now().minusDays(15), new Product(), null, 0.0);
+    Post postRecent1 = ObjectCreator.createPostRecent();
+    Post postRecent2 = ObjectCreator.createPostRecent();
+    Post postRecent3 = ObjectCreator.createPostRecent();
+    Post postOld1 = ObjectCreator.createPostOld();
 
-    Post postRecent4 = new Post(1, 3, LocalDate.now().minusWeeks(1), new Product(), null, 0.0);
-    Post postOld2 = new Post(2, 3, LocalDate.now().minusDays(15), new Product(), null, 0.0);
-    Post postRecent5 = new Post(3, 3, LocalDate.now().minusDays(14), new Product(), null, 0.0);
+    Post postRecent4 = ObjectCreator.createPostRecent();
+    Post postOld2 = ObjectCreator.createPostOld();
+    Post postRecent5 = ObjectCreator.createPostRecent();
 
     follower1.setPosts(List.of(postRecent1, postRecent2, postRecent3, postOld1));
     follower2.setPosts(List.of(postRecent4, postOld2, postRecent5));
