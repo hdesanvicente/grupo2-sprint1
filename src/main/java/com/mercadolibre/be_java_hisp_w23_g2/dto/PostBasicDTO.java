@@ -27,6 +27,6 @@ public class PostBasicDTO {
   @JsonFormat(pattern = "dd-MM-yyyy")
   private LocalDate date;
   private ProductBasicDTO product;
-  private String category;
+  private Integer category;
   private double price;
 }

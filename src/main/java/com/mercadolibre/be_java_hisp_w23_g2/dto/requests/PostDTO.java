@@ -10,7 +10,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.mercadolibre.be_java_hisp_w23_g2.dto.ProductBasicDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
@@ -38,8 +37,8 @@ public class PostDTO {
   @Valid
   private ProductBasicDTO product;
 
-  @NotEmpty(message = "La categoría no puede estar vacía")
-  private String category;
+  @NotNull(message = "La categoría no puede estar vacía")
+  private Integer category;
 
   @NotNull(message = "El precio no puede estar vacío")
   @Max(value = 10000000, message = "El precio máximo por producto es de 10.000.000")

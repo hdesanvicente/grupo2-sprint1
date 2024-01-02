@@ -106,7 +106,7 @@ public class UserRepository implements IUserRepository {
   public List<User> loadData() throws IOException {
     File file = null;
     try {
-      file = ResourceUtils.getFile("classpath:users.json");
+      file = ResourceUtils.getFile("src/main/resources/users.json");
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }

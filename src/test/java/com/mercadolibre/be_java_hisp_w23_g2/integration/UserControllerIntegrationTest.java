@@ -21,19 +21,4 @@ class UserControllerIntegrationTest {
   void getFollowersUser() {
   }
 
-  @Test
-  void unfollowUser() {
-  }
-
-  @Test
-  void getFollowedUser() {
-  }
-
-  @Test
-  void getAll() {
-  }
-
-  @Test
-  void followUser() {
-  }
 }

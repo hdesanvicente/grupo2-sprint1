@@ -197,10 +197,10 @@ public class UserService implements IUserService {
     if (attributes.length < 2) {
       throw new BadRequestException(PARAMETER_INVALID);
     }
-    if ("date" .equals(attributes[0])) {
-      if ("asc" .equals(attributes[1])) {
+    if ("date".equals(attributes[0])) {
+      if ("asc".equals(attributes[1])) {
         posts.sort(Comparator.comparing(Post::getDate));
-      } else if ("desc" .equals(attributes[1])) {
+      } else if ("desc".equals(attributes[1])) {
         posts.sort(Comparator.comparing(Post::getDate).reversed());
       } else {
         throw new BadRequestException(PARAMETER_INVALID);
@@ -222,10 +222,10 @@ public class UserService implements IUserService {
     if (attributes.length < 2) {
       throw new BadRequestException(PARAMETER_INVALID);
     }
-    if ("name" .equals(attributes[0])) {
-      if ("asc" .equals(attributes[1])) {
+    if ("name".equals(attributes[0])) {
+      if ("asc".equals(attributes[1])) {
         user.sort(Comparator.comparing(User::getUserName));
-      } else if ("desc" .equals(attributes[1])) {
+      } else if ("desc".equals(attributes[1])) {
         user.sort(Comparator.comparing(User::getUserName).reversed());
       } else {
         throw new BadRequestException(PARAMETER_INVALID);
